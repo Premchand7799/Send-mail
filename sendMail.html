@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Submit & Send Mail</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex items-center justify-center bg-gray-100">
+
+  <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-md">
+    <h1 class="text-2xl font-bold text-center text-gray-800 mb-6">Submit Data Form</h1>
+
+    <form id="dataForm" class="space-y-4">
+      <!-- Name Field -->
+      <div>
+        <label for="name" class="block text-gray-700 font-medium mb-1">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+          placeholder="Enter your name"
+          required
+        />
+      </div>
+
+      <!-- Mobile Field -->
+      <div>
+        <label for="mobile" class="block text-gray-700 font-medium mb-1">Mobile Number</label>
+        <input
+          type="number"
+          id="mobile"
+          class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
+          placeholder="Enter your mobile number"
+          required
+        />
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex items-center space-x-3 mt-6">
+        <button
+          type="submit"
+          id="submitBtn"
+          class="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition"
+        >
+          Submit
+        </button>
+
+        <button
+          type="button"
+          id="sendMailBtn"
+          class="hidden bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition"
+        >
+          Send Mail
+        </button>
+      </div>
+
+      <!-- Success Message -->
+      <p id="successMsg" class="hidden text-green-600 font-semibold mt-4">✅ Data submitted successfully!</p>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("dataForm");
+    const successMsg = document.getElementById("successMsg");
+    const sendMailBtn = document.getElementById("sendMailBtn");
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Show success message
+      successMsg.classList.remove("hidden");
+
+      // Show Send Mail button
+      sendMailBtn.classList.remove("hidden");
+    });
+
+    sendMailBtn.addEventListener("click", () => {
+      const name = document.getElementById("name").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+
+      // Compose email
+      const subject = encodeURIComponent("User Data Submission");
+      const body = encodeURIComponent(`Name: ${name}\nMobile Number: ${mobile}`);
+      const mailtoLink = `mailto:?subject=${subject}&body=${body}`;
+
+      // Redirect to email client
+      window.location.href = mailtoLink;
+    });
+  </script>
+</body>
+</html>
